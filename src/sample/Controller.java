@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,18 +42,15 @@ public class Controller implements Initializable {
         );
     }
 
-    public void change(ActionEvent actionEvent) {
+    public void change(ActionEvent actionEvent) throws MalformedURLException {
         fileChooser.setTitle("Change Picture");
         File file= fileChooser.showOpenDialog(null);
-        try
+        if(file!=null)
         {
-            if(file!=null)
-            {
-                System.out.println(file.getPath());
-                //imgV.setImage(new Image(file.getPath()));
-            }
+            String url=file.toURI().toURL().toString();
+            imgV.setImage(new Image(url));
         }
-        catch (Exception ex)
+        else
         {
             lblError.setVisible(true);
             lblError.setText("Image Incorrect");
